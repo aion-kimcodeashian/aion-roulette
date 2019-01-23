@@ -2,7 +2,7 @@
 
 ![Four Animals in a Row](img/readme-image.png)
 
-This is the repository for the Aion Animal Roulette tutorial! Feel free to clone, fork, change, and do whatever you want to with this repo! Everything here is built on top of the [Aion Network](https://aion.network).
+This is the repository for the [Aion Animal Roulette Demo](https://aion-roulette.netlify.com)! Feel free to clone, fork, change, and do whatever you want to with this repo! Everything here is built on top of the [Aion Network](https://aion.network).
 
 ## Prerequisites
 

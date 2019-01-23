@@ -24,7 +24,7 @@ This is the repository for the Aion Animal Roulette tutorial! Feel free to clone
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/aion-kimcodeashian/aion-roulette.git
+    git clone https://github.com/aion-kimcodeashian/aion-roulette-final.git
     ```
 
 2. Open `src/js/index.js` and edit line 48 with your **Nodesmith URL**. It should look something like this:

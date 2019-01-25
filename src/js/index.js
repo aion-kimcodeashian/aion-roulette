@@ -13,7 +13,6 @@ let account = "Not Detected - Please download AIWA to play this game";
 
 // On load, inject AIWA
 window.onload = () => {
-  aiwa.enable();
   if (aionweb3){
     aiwa = aionweb3;
     aiwaInjected = true
@@ -82,7 +81,7 @@ class App extends React.Component {
       }.bind(this));
     }
 
-    // update mininum bet value
+    // update minimum bet value
     myContract.methods.minimumBet().call({})
     .then(function(result){
       console.log('min bet:', result);
@@ -91,7 +90,7 @@ class App extends React.Component {
       })
     }.bind(this));
 
-    // update mininum bet value
+    // update maximum bet value
     myContract.methods.maximumBet().call({})
     .then(function(result){
       console.log('min bet:', result);
@@ -246,7 +245,7 @@ class App extends React.Component {
         data: myContract.methods.bet(number).encodeABI()
       }
 
-      // Pop up AIWA
+      // Prompt AIWA
       aiwa.eth.sendTransaction(
         voteCallObject
       ).then(function(txHash){

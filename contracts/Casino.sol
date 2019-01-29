@@ -56,8 +56,8 @@ library SafeMath {
 /// @author Merunas Grincalaitis
 /// edited by Kim Codeashian
 contract Casino {
+  using SafeMath for uint;
   address owner;
-
   // The minimum bet a user has to make to participate in the game
   uint public minimumBet = 1; // Equal to 1.00 AION
   // The maximum bet a user has to make to participate in the game

@@ -72,6 +72,8 @@ contract Casino {
   uint public totalPaid;
   // The number / animal that won the last game
   uint public lastLuckyAnimal;
+  // The current round number
+  uint public numberRound;
   // Array of players in each round
   address[] public players;
 

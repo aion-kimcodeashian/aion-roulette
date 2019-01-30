@@ -172,7 +172,6 @@ contract Casino {
     }
 
     if (count > 0){
-      uint winnerAIONAmount = totalBet / count; // How much each winner gets
       for(uint j = 0; j < count; j++){
         if(winners[j] != address(0)) // Check that the address in this fixed array is not empty
         address playerAddressW = winners[j]; // Grab winning addresses

@@ -5,18 +5,27 @@ import casinoJSON from './../../contracts/Casino.json' // import our contract JS
 
 // Initializing Variables
 let web3;
-let aiwa;
-let aiwaInjected = false;
-let myContract;
-let contractAddress = "0xa0e51f852783e5edd470657e8e3581b091816c37aa783e7e52f3a4638d16349c";
+let aiwa = false;
+let myContract = false;
+const contractAddress = "0xa0e51f852783e5edd470657e8e3581b091816c37aa783e7e52f3a4638d16349c";
 let account = "Not Detected - Please download AIWA to play this game";
 
+const config = require('./config.js');
 // On load, inject AIWA
 window.onload = () => {
   if (aionweb3){
     aiwa = aionweb3;
-    aiwaInjected = true
     console.log("✓ AIWA injected successfully");
+
+    const API_KEY = config.nodesmith_apiKey;
+
+    web3 = new Web3(new Web3.providers.HttpProvider("https://api.nodesmith.io/v1/aion/testnet/jsonrpc?apiKey="+API_KEY));
+    myContract = new web3.eth.Contract(casinoJSON.info.abiDefinition, contractAddress);
+    
+    //TODO: use AIWA for contract after fixing https://github.com/blockxlabs/aiwa/issues/18
+    //nodesmithContract.methods.checkPlayerExists(aiwa.eth.accounts.toString()).call({})
+    //const aiwaContract =  aiwa.eth.contract(casinoJSON.info.abiDefinition, contractAddress);
+    //aiwaContract.methods.checkPlayerExists(aiwa.eth.accounts.toString()).call({})
   }
 }
 
@@ -45,18 +54,7 @@ class App extends React.Component {
   }
 
   initializeContract() {
-    if (!aiwaInjected) {
-      // Fallback Nodesmith Connection
-      web3 = new Web3(new Web3.providers.HttpProvider("https://api.nodesmith.io/v1/aion/testnet/jsonrpc?apiKey=ENTERYOURAPIKEYHERE"));
 
-      // Contract Instance
-      myContract = new web3.eth.Contract(casinoJSON.info.abiDefinition, contractAddress);
-      console.log('Contract Instantiated:', myContract);
-    } else {
-      // Contract Instance w/ AIWA
-      myContract = new aiwa.Contract(casinoJSON.info.abiDefinition, contractAddress);
-      console.log('Contract Instantiated:', myContract);
-    }
     this.updateState(); // Populate DOM w/ contract info
     this.setupListeners();
     setInterval(function(){ // Poll contract info
@@ -66,8 +64,14 @@ class App extends React.Component {
 
   // Update DOM from Contract information
   updateState() {
+
+    if (!myContract) {
+      console.log("Not updating, contract not available");
+      return;
+    }
+
     console.log('updateState hit');
-    if (aiwaInjected){ // update active account
+    if (aiwa){ // update active account
       this.setState({
         accounts: aiwa.eth.accounts.toString(),
       })
@@ -228,7 +232,7 @@ class App extends React.Component {
     let voteCallObject;
     let bet = (this.refs['aion-bet'].value).toString();
     console.log('bet =', bet);
-    if (!aiwaInjected) { // Check AIWA is enabled
+    if (!aiwa) { // Check AIWA is enabled
       alert("You will need to have AIWA enabled to place a vote");
 
     } else if (!bet || parseFloat(bet) < this.state.minimumBet) {
